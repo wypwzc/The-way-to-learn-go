@@ -1,0 +1,43 @@
+文件必须在同一个包下：如果你使用 go run 运行多个文件，或者你的文件引入了同目录下的其他自定义文件，你需要把所有相关文件都加上，或者使用 go run .
+
+package main 和 main 函数：一个可以直接运行的 .go 文件，其第一行必须声明为 package main，并且必须包含一个 func main() 函数作为程序入口。如果是其他的 package（如 package utils），则无法用 go run 直接运行，只能作为模块被调用。
+模块依赖 (Go Modules)：如果你的项目比较复杂，依赖了第三方库（如 gin、gorm 等），你需要确保项目已经初始化了 Go 模块。通常在项目根目录下执行：
+
+go mod init <模块名>
+go mod tidy
+然后再使用 go run 或 go build。
+
+
+
+```
+#常见目录结构
+myproject/
+  ├── go.mod            (总公司的营业执照)
+  ├── cmd/              (习惯上，把可执行程序放在 cmd 目录下)
+  │   ├── server/       (子公司 A)
+  │   │   └── main.go   (package main, 有自己的 func main)
+  │   └── client/       (子公司 B)
+  │       └── main.go   (package main, 有自己的 func main)
+  └── internal/         (两家公司共用的工具代码)
+      └── utils.go      (package utils, 没有 func main)
+```
+
+
+
+```go
+s := "hello"
+
+var s string = "hello" 
+
+//可分开声明和初始化：
+var s string // 声明变量，默认值为空字符串 ""
+s = "hello"   // 后续赋值
+```
+
+| 特性         | `s := "hello"`          | `var s string = "hello"` |
+| ------------ | ----------------------- | ------------------------ |
+| 语法形式     | 短变量声明              | 标准变量声明             |
+| 适用位置     | 只能在函数内            | 函数内和函数外均可       |
+| 类型推断     | 自动推断s的类型是string | 必须显式声明string类型   |
+| 初始化方式   | 必须同时初始化          | 可分开声明和初始化       |
+| 推荐使用场景 | 函数内部                | 函数外部或需要显式类型时 |
