@@ -28,7 +28,11 @@ package main
 import "fmt"
 
 func main() {
-	// 了解 string 类型后，修改
-	// fmt.Println 的参数，使其成为一个字符串。
-	fmt.Println(hello world)
+	var name string
+	count, err := fmt.Scan(&name)
+	if err != nil {
+		fmt.Println("输入失败")
+		return
+	}
+	fmt.Println(count, name)
 }
