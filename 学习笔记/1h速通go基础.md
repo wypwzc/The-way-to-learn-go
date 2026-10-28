@@ -173,7 +173,7 @@ func main() {
 1. **通过索引在循环中修改切片**
    - `for i := range scores { scores[i] += 5 }`：利用 `range` 循环获取切片的索引 `i`，并通过索引直接修改原切片 `scores` 中的元素。修改后，`scores` 的元素变为了 `[85, 95]`。   
 2. **`make` 分配独立的底层数组**
-   - `backup := make([]int, len(scores))`：使用 `make` 函数创建了一个长度为 `2` 的新切片 `backup`。   
+   - `backup := make([]int, len(scores))`：使用 `make` 函数创建了一个**创建一个名字叫 `backup`、类型为 `[]int`、且长度与 `scores` 完全相同的新切片**。
    - **机制**：`make` 会为新切片分配一块**全新的、互不干扰的底层数组**，而不是共享引用。   
 3. **`copy` 函数进行深拷贝与返回值**
    - `count := copy(backup, scores)`：将 `scores` 中的元素完整复制到 `backup` 中。   
