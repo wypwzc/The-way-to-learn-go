@@ -195,6 +195,11 @@ func main() {
     fmt.Println(scores[1])
     fmt.Println(len(part))
 }
+
+
+//输出结果
+95
+2
 ~~~
 
 **截取与共享底层数组**：`part := scores[1:3]` 从索引 `1`（包含）截取到索引 `3`（不包含）。这使得 `part` 包含了原切片中的 `90` 和 `70`，并且`part` 与 `scores` 共享同一个底层数组。   
@@ -206,3 +211,33 @@ func main() {
 **获取切片长度**：`fmt.Println(len(part))` 用于获取切片 `part` 的长度。由于截取范围是 `[1:3]`，包含索引 `1` 和 `2` 两个元素，因此长度为 `3 - 1 = 2`，输出结果为 `2`。   
 
 part只截取scores俩部分  part[0] 和scores [1]实际上指的是同一个底层数组
+
+
+
+##### 切片的大部分入门问题
+
+切片的大部分入门问题都可以从起点，长度，容量和是否共享底层元素四件事拆开分析。需要独立副本时用明确的新空间和复制，需要追加时接住append的返回值。
+
+
+
+
+
+# 映射与字符串
+
+### Map（字典/映射）
+
+~~~go
+func main() {
+    scores := map[string]int{"小林": 85, "小陈": 92}
+    fmt.Println(scores["小林"])
+    fmt.Println(scores["小王"])
+    fmt.Println(len(scores))
+}
+
+
+//输出结果
+85
+0
+2
+~~~
+
