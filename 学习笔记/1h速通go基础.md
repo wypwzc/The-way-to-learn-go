@@ -300,3 +300,23 @@ func main() {
 4. **获取 Map 的长度**
 
    - `fmt.Println(len(scores))` 使用内置的 `len()` 函数来获取当前 map 中存储了多少对键值。因为里面有两对数据（小林和小陈），所以输出结果为 **`2`**。   
+
+
+
+#####  Map的“逗号 ok”惯用法以及内置的 **`delete` 删除函数**机制：   
+
+~~~go
+func main() {
+    scores := map[string]int{"小林": 0}
+    score, ok := scores["小林"]
+    fmt.Println(score, ok)
+    delete(scores, "小林")
+    score, ok = scores["小林"]
+    fmt.Println(score, ok)
+}
+
+//输出结果
+0 true
+0 false
+~~~
+
