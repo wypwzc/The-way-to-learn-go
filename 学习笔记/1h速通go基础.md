@@ -333,3 +333,40 @@ func main() {
    - `score, ok = scores["小林"]` 在执行完删除操作后，再次尝试查找 `"小林"`。   
    - **机制**：由于该键已经被 `delete` 彻底删除了，此时它已不存在于 map 中。因此，`score` 返回了 `int` 类型的零值 `0`，而 `ok` 的值变成了 `false`（用来明确告诉你：这个键已经不在 map 里了）。   
    - `fmt.Println(score, ok)` 打印输出：`0 false`。   
+
+
+
+### **Nil Map（未初始化的字典）** 的特性
+
+只声明一个map变量但是没有创建实际映射时，他的零值是nil
+
+~~~go
+func main() {
+    var scores map[string]int
+    fmt.Println(scores == nil)
+    fmt.Println(scores["小林"])
+    scores = make(map[string]int)
+    scores["小林"] = 85
+    fmt.Println(scores["小林"])
+}
+
+//输出结果
+true
+0
+85
+~~~
+
+这段代码主要演示了 Go 语言中 **Nil Map（未初始化的字典）** 的特性、安全读取规则以及通过 `make` 进行初始化的机制：   
+
+1. **声明未初始化的 Map (`nil map`)**
+   - `var scores map[string]int` 仅声明了一个 map 变量，但没有进行初始化。在 Go 语言中，未初始化的 map 其默认值就是 `nil`。   
+   - `fmt.Println(scores == nil)` 因此会输出 `true`。   
+2. **从 Nil Map 中读取数据（安全机制）**
+   - `fmt.Println(scores["小林"])` 尝试从一个 `nil` map 中读取数据。   
+   - **机制**：在 Go 语言中，**从一个 `nil` map 中读取数据是完全安全的**，程序不会抛出异常（Panic），而是会直接返回该值类型的零值（`int` 的零值是 `0`），所以这里会打印出 `0`。   
+   - *注意*：虽然读取是安全的，但如果尝试向一个 `nil` map 中**写入**数据（例如执行 `scores["小林"] = 85`），会导致运行时恐慌（Panic）。
+3. **使用 `make` 函数进行初始化**
+   - `scores = make(map[string]int)` 使用 `make` 函数为 map 分配底层的数据结构内存。经过这一步后，`scores` 不再是 `nil`，变成了一个可以正常读写的有效 map。   
+4. **写入数据与再次读取**
+   - `scores["小林"] = 85` 成功向初始化后的 map 中写入了键值对。   
+   - 最后通过 `fmt.Println(scores["小林"])` 再次读取，此时成功获取到了刚存入的数据，输出结果为 `85`。   
