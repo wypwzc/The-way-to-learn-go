@@ -410,3 +410,41 @@ func main() {
 - **`ch`**：返回的是当前的 **Rune 字符**（使用 `%c` 占位符可以将其打印成人类可读的文字）。
 
 ### 高频核心字符串处理函数（**`strings` 包** ）
+
+~~~go
+// 高频核心字符串处理函数，需要strings包的支持
+func main() {
+	text := " Go基础 "
+	clean := strings.TrimSpace(text)
+	fmt.Println(clean)
+	fmt.Println(strings.Contains(clean, "Go"))
+	parts := strings.Split("小林,85", ",")
+	fmt.Println(parts[0], parts[1])
+}
+~~~
+
+1. **去除首尾空白字符 (`strings.TrimSpace`)**
+   - **代码**：`clean := strings.TrimSpace(text)`   
+   - **解释**：定义了一个带前后空格的字符串 `" Go基础 "`，通过 `strings.TrimSpace` 函数过滤掉了开头和结尾的空格、制表符等空白，返回处理后的新字符串 `"Go基础"`，并将其打印出来。   
+2. **检查子串是否存在 (`strings.Contains`)**
+   - **代码**：`fmt.Println(strings.Contains(clean, "Go"))`   
+   - **解释**：检查 `clean` 变量中是否包含子串 `"Go"`。因为字符串中确实含有 `"Go"`，所以该函数返回布尔值 `true` 并打印。   
+3. **按分隔符切割字符串 (`strings.Split`)**
+   - **代码**：`parts := strings.Split("小林,85", ",")`   
+   - **解释**：使用逗号 `,` 作为分隔符，将 `"小林,85"` 切割成多个片段。该函数会返回一个字符串切片（`[]string`），其内容为 `["小林", "85"]`。   
+4. **访问切片元素**
+   - **代码**：`fmt.Println(parts[0], parts[1])`   
+   - **解释**：通过索引 `0` 和 `1` 分别取出切片中的第一个元素（`"小林"`）和第二个元素（`"85"`）并打印输出。   
+
+ 核心机制与原理
+
+这段代码主要展示了 Go 语言标准库中 **`strings` 包** 的常用文本处理能力。其背后的设计与底层原理体现在以下几个方面：
+
+1. **字符串的不可变性（Immutability）**
+   - 在 Go 语言中，字符串是只读的底层字节数组（Byte Slices）。
+   - 像 `strings.TrimSpace` 这样看似“修改”字符串的函数，实际上并不会去改动原内存中的字符串，而是会**创建并返回一个新的字符串**。
+2. **高效的切片返回值（Slice Allocation）**
+   - `strings.Split` 返回的 `parts` 是一个切片（`[]string`）。Go 的切片底层是一个包含“指向底层数组的指针、长度、容量”的小结构体。
+   - 切割操作不会对原字符串的每个字符进行深拷贝，而是高效地通过指针和长度来标记切片出来的各个子串位置。
+3. **标准库导入约束**
+   - 要使用这些字符串函数，必须在源码文件的头部正确导入标准库：**strings**
