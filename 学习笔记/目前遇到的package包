@@ -1,4 +1,5 @@
 import (
 	"fmt"
 	"unicode/utf8" //它会遍历字符串，根据 UTF-8 编码规则，正确计算出字符串中包含多少个 Unicode 字符
+	"strings"      //
 )
