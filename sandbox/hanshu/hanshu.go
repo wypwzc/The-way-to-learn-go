@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 //函数函数基本用法返回值
 /*func greet(name string) string {
 	return "Hello," + name
@@ -25,3 +27,10 @@ func main() {
 	fmt.Println(result1, ok1)
 }
 */
+
+//defer在函数退出时执行，常用于资源释放
+func main() {
+	defer fmt.Println("先登记")
+	defer fmt.Println("后登记")
+	fmt.Println("处理中")
+}
