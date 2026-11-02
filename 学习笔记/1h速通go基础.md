@@ -925,6 +925,12 @@ func main() {
 
 # 方法与接口
 
+~~~go
+func (接收者变量名 接收者类型) 方法名(参数列表) 返回值类型 {
+    // 方法体
+}
+~~~
+
 - **结构体（Struct）** 决定了“我是谁”（数据的载体）。
 - **方法（Method）** 决定了“我能做什么”（行为的绑定）。
 - **接口（Interface）** 决定了“我们有哪些共同的标准”（多态与解耦的契约）。
@@ -970,4 +976,20 @@ true
    - 这里的接收者类型是 `Student`（而不是指针 `*Student`），这被称为**值接收者**。
    - 当通过 `student.Passed()` 调用时，Go 语言会把 `student` 实例的值**复制一份**传递给方法内部的 `s`。
    - **适用场景**：因为该方法只需要**读取**数据（判断 `s.Score >= 60`），而不需要修改原结构体的内容，使用值接收者非常安全且直观。   
+
+
+
+### 修改原纪录的方法
+
+~~~go
+type Student struct { Score int }
+func (s *Student) AddBonus(bonus int) {
+    s.Score += bonus
+}
+func main() {
+    student := Student{Score: 80}
+    student.AddBonus(5)
+    fmt.Println(student.Score)
+}
+~~~
 
