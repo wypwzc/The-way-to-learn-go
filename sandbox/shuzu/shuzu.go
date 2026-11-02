@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 //数组赋值影响复制数组
 //修改备份不影响原数组
 /*func main() {
@@ -21,3 +23,10 @@ package main
 	scores = append(scores, 5)
 	fmt.Println(scores)
 }*/
+//显示索引
+func main() {
+	scores := []int{80, 90, 70}
+	for index, score := range scores {
+		fmt.Println(index, score)
+	}
+}
