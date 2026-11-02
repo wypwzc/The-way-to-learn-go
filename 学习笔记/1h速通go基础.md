@@ -872,3 +872,53 @@ func main() {
    - 你可能会好奇：在 `setScore` 函数里，`student` 是一个指针（`*Student`），为什么可以直接写 `student.Score = 85`，而不需要写繁琐的 `(*student).Score = 85` 呢？
    - **机制原理**：Go 语言编译器非常智能。当你通过结构体指针去访问或修改字段时，如果发现左边是个指针，Go 会**自动帮你做解引用**，让你可以像操作普通结构体一样流畅地编写代码。
 
+
+
+### 俩份值与一个指针
+
+~~~go
+type Student struct { Score int }
+func main() {
+    first := Student{Score: 80}
+    second := first    //复制
+    pointer := &first   //取地址
+    second.Score = 90
+    pointer.Score = 85
+    fmt.Println(first.Score, second.Score)
+}
+
+//输出结果
+85 90
+~~~
+
+1. **定义结构体**
+   - **代码**：`type Student struct { Score int }`   
+   - **解释**：定义了一个名为 `Student` 的结构体，内部包含一个整型字段 `Score`。   
+2. **初始化实例**
+   - **代码**：`first := Student{Score: 80}`   
+   - **解释**：创建了一个 `Student` 实例 `first`，其分数为 `80`。   
+3. **结构体赋值（值拷贝）**
+   - **代码**：`second := first`   
+   - **解释**：将 `first` 赋值给 `second`。由于结构体是值类型，这里会把 `first` 的数据**完整复制一份**给 `second`，两者拥有各自独立的内存空间。   
+4. **获取指针（取址）**
+   - **代码**：`pointer := &first`   
+   - **解释**：使用取址符 `&` 获取了原实例 `first` 在内存中的实际地址，并赋值给指针变量 `pointer`。   
+5. **修改副本的值**
+   - **代码**：`second.Score = 90`   
+   - **解释**：修改副本 `second` 的分数。因为它是独立复制出来的，这次修改**不会**影响到 `first`。   
+6. **通过指针修改原实例的值**
+   - **代码**：`pointer.Score = 85`   
+   - **解释**：通过指针 `pointer` 直接去修改原实例 `first` 的分数。此时，`first` 的分数被成功更新为 `85`。   
+7. **打印输出**
+   - **代码**：`fmt.Println(first.Score, second.Score)`   
+   - **解释**：分别打印 `first` 和 `second` 的分数，输出结果为 **`85 90`**。   
+
+### 三、 核心机制与原理
+
+这段代码完美地把前面学过的两个核心机制结合在了一起：
+
+1. **结构体的“值类型”独立复制**
+   - 当执行 `second := first` 时，Go 进行了内存层面的值拷贝，使 `second` 成为了一个独立的个体，修改它不会波及 `first`。   
+2. **结构体指针与“自动解引用”语法糖**
+   - 当执行 `pointer.Score = 85` 时，`pointer` 是一个结构体指针（`*Student`）。   
+   - 按照严谨的底层逻辑，修改指针指向的字段应该写成 `(*pointer).Score = 85`。但 Go 语言内置了**自动解引用机制**，允许你直接用点操作符（`.`）通过指针去访问或修改字段，让代码写起来更加优雅、自然。
