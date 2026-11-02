@@ -931,6 +931,10 @@ func main() {
 
 通过这三者的组合，Go 语言在没有传统面向对象“类和继承”的情况下，构建出了极其灵活、高内聚且低耦合的代码世界。
 
+
+
+### Go 语言的方法（Method）与值接收者
+
 ~~~go
 type Student struct { Score int }
 func (s Student) Passed() bool {
@@ -942,7 +946,28 @@ func main() {
 }
 
 //输出结果
+true
 ~~~
 
+1. **定义结构体**
+   - **代码**：`type Student struct { Score int }`   
+   - **解释**：定义了一个名为 `Student` 的结构体，内部包含一个整型字段 `Score`。   
+2. **定义结构体方法**
+   - **代码**：`func (s Student) Passed() bool { return s.Score >= 60 }`   
+   - **解释**：为 `Student` 结构体绑定了一个名为 `Passed` 的方法。该方法返回一个布尔值（`bool`）。内部通过 `s.Score >= 60` 判断分数是否及格。   
+3. **实例化结构体并调用方法**
+   - **代码**：`student := Student{Score: 80}` 随后 `fmt.Println(student.Passed())`   
+   - **解释**：在 `main` 函数中创建了一个 `Student` 实例，分数为 `80`。接着通过点操作符（`.`）调用了它的 `Passed()` 方法，并把结果打印到控制台。   
 
+ 核心机制与原理：Go 语言的方法（Method）与值接收者
+
+这段代码展示了 Go 语言中面向对象风格的函数绑定机制：
+
+1. **什么是方法（Method）？**
+   - Go 语言虽然没有传统面向对象语言（如 Java 或 C++）中的 `class` 关键字，但它允许为自定义类型（如结构体）定义**方法**。
+   - 方法与普通函数的区别在于，它多了一个接收者（Receiver）参数——即函数名前面的 `(s Student)`。这让 `Passed` 方法从属于 `Student`，只有 `Student` 的实例才能调用它。   
+2. **值接收者（Value Receiver）机制**
+   - 这里的接收者类型是 `Student`（而不是指针 `*Student`），这被称为**值接收者**。
+   - 当通过 `student.Passed()` 调用时，Go 语言会把 `student` 实例的值**复制一份**传递给方法内部的 `s`。
+   - **适用场景**：因为该方法只需要**读取**数据（判断 `s.Score >= 60`），而不需要修改原结构体的内容，使用值接收者非常安全且直观。   
 
