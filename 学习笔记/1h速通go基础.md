@@ -930,3 +930,19 @@ func main() {
 - **接口（Interface）** 决定了“我们有哪些共同的标准”（多态与解耦的契约）。
 
 通过这三者的组合，Go 语言在没有传统面向对象“类和继承”的情况下，构建出了极其灵活、高内聚且低耦合的代码世界。
+
+~~~go
+type Student struct { Score int }
+func (s Student) Passed() bool {
+    return s.Score >= 60
+}
+func main() {
+    student := Student{Score: 80}
+    fmt.Println(student.Passed())
+}
+
+//输出结果
+~~~
+
+
+
