@@ -178,6 +178,7 @@ func main() {
 3. **`copy` 函数进行深拷贝与返回值**
    - `count := copy(backup, scores)`：将 `scores` 中的元素完整复制到 `backup` 中。   
    - **机制**：`copy(dst, src)` 会把源切片的内容复制到目标切片，并**返回实际复制的元素个数**（此处 `count` 的值为 `2`）。此时 `backup` 的内容更新为 `[85, 95]`。   
+   - `copy` 的返回值是**实际复制的元素个数**
 4. **独立修改互不影响**
    - `backup[0] = 99`：将 `backup` 的第一个元素修改为 `99`。   
    - **机制**：由于 `backup` 和 `scores` 拥有完全独立的底层数组（实现了深拷贝），因此对 `backup` 的修改**不会影响** `scores`。   
@@ -228,10 +229,13 @@ part只截取scores俩部分  part[0] 和scores [1]实际上指的是同一个�
 
 ~~~go
 func main() {
-    scores := map[string]int{"小林": 85, "小陈": 92}
+    scores := map[string]int{
+        "小林": 85,
+        "小陈": 92
+    }
     fmt.Println(scores["小林"])
     fmt.Println(scores["小王"])
-    fmt.Println(len(scores))
+    fmt.Println(len(scores))     //查找map的长度
 }
 
 //输出结果
