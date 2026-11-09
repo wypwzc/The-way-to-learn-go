@@ -1059,6 +1059,14 @@ func main() {
 
 ### 隐式接口实现
 
+提倡 接口定义在使用方，而不是实现方
+
+1.实现多态
+
+多态：不同的结构体，可以被同一个函数统一处理
+
+
+
 ~~~go
 type Reporter interface { Report() string }
 type Student struct { Name string }
