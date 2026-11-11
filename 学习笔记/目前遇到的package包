@@ -2,4 +2,7 @@ import (
 	"fmt"
 	"unicode/utf8" //它会遍历字符串，根据 UTF-8 编码规则，正确计算出字符串中包含多少个 Unicode 字符
 	"strings"      //
+	"strconv"      //strconv包提供了基本数据类型和其字符串表示之间的转换
+	// 使用 Itoa 将 int 转换为 string
+	//str := strconv.Itoa(num)
 )
