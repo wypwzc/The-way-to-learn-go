@@ -5,4 +5,5 @@ import (
 	"strconv"      //strconv包提供了基本数据类型和其字符串表示之间的转换
 	// 使用 Itoa 将 int 转换为 string
 	//str := strconv.Itoa(num)
+	"errors" //用于创建和返回普通的错误对象。
 )
