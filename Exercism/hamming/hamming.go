@@ -4,7 +4,7 @@ import "errors"
 
 func Distance(a, b string) (int, error) {
 	if len(a) != len(b) {
-		return 0, errors.New("strings must be of equal length")
+		return 0, errors.New("错误：必须传入长度相同的两个字符串")
 	}
 
 	distance := 0

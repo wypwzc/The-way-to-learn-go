@@ -7,10 +7,10 @@ import (
 
 func main() {
 	// 调用 hamming 包里的 Distance 函数
-	dist, err := hamming.Distance("GAGCCTACTAACGGGAT", "CATCGTAATGACGGCCT")
+	dist, err := hamming.Distance("GAGCCTACTAACGGGAT", "ATCGTAATGACGGCCT")
 
 	if err != nil {
-		fmt.Println("出错了:", err)
+		fmt.Println(err)
 		return
 	}
 
